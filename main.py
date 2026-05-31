@@ -19,7 +19,8 @@ def check_status(grid, score):
                         occurances += 1
 
                 if occurances > 1:
-                    return False        
+                    return False       
+                 
 
 # get player input and translate the snake
 
@@ -31,6 +32,28 @@ def check_status(grid, score):
 
 # define an empty grid, and set up game loop
 def play_game ():
-    grid = {}
+    grid = []
+
+    # add arrays inside grid
+
+    for x in range(0, 10):
+        grid.append([])
 
     ended = False
+
+    # set up grid with the characters
+    for x in range(0, 10):
+        for y in range(0, 10):
+            # border character (#) is when y == 0, y == 9, x == 1, x == 9
+            if (x == 0) or (x == 9) or (y == 0) or (y == 9):
+                grid[x].append("#")
+            else:
+                grid[x].append("-")
+
+    # print the grid line-by-line instead of using print in one line
+    for x in range(0, 10):
+        for y in range(0, 10):
+            print(grid[x][y], end="\t")
+        print("\n")
+
+play_game()
