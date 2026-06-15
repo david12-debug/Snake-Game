@@ -1,3 +1,7 @@
+import random
+
+grid = []
+
 # if snake is in the boundaries, or in itself, game ends, and return score. if snake is in the apple, increment score
 def check_status(grid, score):
     x = 0
@@ -26,13 +30,15 @@ def check_status(grid, score):
 
 # create a blank grid (an array with strings that make up each row) with the snake, and the apple
 
-# add apple in a random spot in the grid that isnt the snake, or the player wins
-
-# put snake in a random spot
+# print the grid line-by-line instead of using print in one line
+def print_grid ():
+    for x in range(0, 10):
+        for y in range(0, 10):
+            print(grid[x][y], end="\t")
+        print("\n")
 
 # define an empty grid, and set up game loop
 def play_game ():
-    grid = []
 
     # add arrays inside grid
 
@@ -50,10 +56,29 @@ def play_game ():
             else:
                 grid[x].append("-")
 
-    # print the grid line-by-line instead of using print in one line
+    print_grid()
+
+    # put snake in a random spot
+    snakePos = [
+        random.randint(1, 8), random.randint(1, 8)
+    ]
+
+    # add apple in a random spot in the grid that isnt the snake, or the player wins
+    placedApple = False
+
+    applePool = []
+
     for x in range(0, 10):
         for y in range(0, 10):
-            print(grid[x][y], end="\t")
-        print("\n")
+            if grid[x][y] == "-":
+                applePool.append([x, y])
+
+    if len(applePool) > 0:
+        randomApplePos = applePool[random.randint(0, len(applePool))]
+
+        grid[randomApplePos[0]][randomApplePos[1]] = "@"
+
+    print_grid()
+
 
 play_game()
