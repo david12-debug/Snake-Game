@@ -3,7 +3,7 @@ import random
 grid = []
 
 # if snake is in the boundaries, or in itself, game ends, and return score. if snake is in the apple, increment score
-def check_status(grid, score):
+def snake_legal(grid, score):
     x = 0
     y = 0
 
@@ -39,6 +39,7 @@ def print_grid ():
 
 # define an empty grid, and set up game loop
 def play_game ():
+    score = 0
 
     # add arrays inside grid
 
@@ -56,12 +57,12 @@ def play_game ():
             else:
                 grid[x].append("-")
 
-    print_grid()
-
     # put snake in a random spot
     snakePos = [
         random.randint(1, 8), random.randint(1, 8)
     ]
+
+    grid[snakePos[0]][snakePos[1]] = "%"
 
     # add apple in a random spot in the grid that isnt the snake, or the player wins
     placedApple = False
@@ -74,11 +75,73 @@ def play_game ():
                 applePool.append([x, y])
 
     if len(applePool) > 0:
-        randomApplePos = applePool[random.randint(0, len(applePool))]
+        randomApplePos = applePool[random.randint(0, len(applePool) - 1)]
 
         grid[randomApplePos[0]][randomApplePos[1]] = "@"
 
     print_grid()
+
+    while True:
+        player_input = ""
+
+        while player_input not in ["W", "A", "S", "D", "E"]:
+            player_input = input(f"Score: {score}\nEnter W, A, S, or D to move the snake (snake body: %) or E to exit: ").upper()
+
+        currentRow, currentCol = snakePos
+
+        next_position = [
+            currentRow, currentCol
+        ]
+
+        if player_input == "W":
+            next_position = [
+                currentRow - 1, currentCol
+            ]
+        elif player_input == "A":
+            next_position = [
+                currentRow, currentCol - 1
+            ]
+        elif player_input == "S":
+            next_position = [
+                currentRow + 1, currentCol
+            ]
+        elif player_input == "D":
+            next_position = [
+                currentRow , currentCol + 1
+            ]
+        elif player_input == "E":
+            print(f"Final score: {score}")
+            return
+
+        nextRow, nextCol = next_position
+
+        # check if snake made an illegal move (boundary #, or itself %)
+        next_grid = grid[nextRow][nextCol]
+
+        if next_grid in ["#", "%"]:
+            print(f"Illegal move. Final score: {score}")
+            return
+
+        # if snake's next move is in an apple (@), increment score
+
+        if next_grid == "@":
+            print("snake will eat an apple")
+            score = score + 1
+
+            # snake body will grow and add a body part (%) from its current position
+            grid[currentRow][currentCol] = "%"
+        else:
+            grid[currentRow][currentCol] = "-"
+
+        grid[nextRow][nextCol] = "%"
+
+        snakePos = [
+            nextRow, nextCol
+        ]
+
+        # update grid
+
+        print_grid()
 
 
 play_game()
