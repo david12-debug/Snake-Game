@@ -81,6 +81,10 @@ def play_game ():
 
     print_grid()
 
+    # keep track of the rest of the snake's body
+
+    snakeBody = []
+
     while True:
         player_input = ""
 
@@ -121,6 +125,28 @@ def play_game ():
         if next_grid in ["#", "%"]:
             print(f"Illegal move. Final score: {score}")
             return
+        
+        # loop through the snake's body (reverse order) and update their positions
+
+        for i, bodyPosition in reversed(list(enumerate(snakeBody))):
+            bodyRow, bodyCol = bodyPosition
+
+            # if index doesn't equal 0 then there must be another value next, so it's safe to access the next value
+
+            if i != 0:
+                nextBodyPosition = snakeBody[i - 1]
+
+                nextBodyRow, nextBodyCol = nextBodyPosition
+
+                grid[nextBodyRow][nextBodyCol] = "%"
+
+                snakeBody[i] = [nextBodyRow, nextBodyCol]
+            else:
+                snakeBody[i] = [currentRow, currentCol]
+
+                grid[currentRow][currentCol] = "%"
+
+            grid[bodyRow][bodyCol] = "-"
 
         # if snake's next move is in an apple (@), increment score
 
@@ -130,7 +156,11 @@ def play_game ():
 
             # snake body will grow and add a body part (%) from its current position
             grid[currentRow][currentCol] = "%"
-        else:
+
+            # record the snake's new body part
+
+            snakeBody.append([currentRow, currentCol])
+        elif len(snakeBody) == 0:
             grid[currentRow][currentCol] = "-"
 
         grid[nextRow][nextCol] = "%"
