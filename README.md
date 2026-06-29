@@ -1,16 +1,19 @@
 Control a snake using the W, A, S, and D keys. 
 Press W to go up, A to go left, S to go right, and D to go down.
+Press E to exit the game
+
 The objective is to collect the apples (@) without touching the snake's body (%), and the boundaries of the game (#)
+This game is played in the code editor terminal
 
-Preview:
+Preview of an empty grid with an apple:
 
-# # # # # # # # # #
-# - - - - - - - - #
-# - @ - - - - - - #
-# - - - - % % - - #
-# - % - - % % - - #
-# - % - % % % - - #
-# - % - % - % - - #
-# - % % % - - - - #
-# - - - - - - - - #
-# # # # # # # # # #
+#  #  #  #  #  #  #  #  #  #
+#  -  -  -  -  -  -  -  -  #
+#  -  @  -  -  -  -  -  -  #
+#  -  -  -  -  -  -  -  -  #
+#  -  -  -  -  -  -  -  -  #
+#  -  -  -  -  -  -  -  -  #
+#  -  -  -  -  -  -  -  -  #
+#  -  -  -  -  -  -  -  -  #
+#  -  -  -  -  -  -  -  -  #
+#  #  #  #  #  #  #  #  #  #
